@@ -26,3 +26,37 @@ A linkekre kattintva wikipedia oldalak nyílnak meg.
 
 Amennyiben a villany ég, a linkek ne legyenek kattinthatóak, azzaz klikk esetén ne nyíljon meg a href-ben megadott oldal, egyik link esetén sem.
  */
+
+const initialState = JSON.parse(localStorage.getItem('state'));
+
+const containerEl = document.querySelector('#container');
+const casingEl = document.querySelector('.casing');
+const switchEl = document.querySelector('.switch');
+
+if (initialState && initialState.on) {
+    containerEl.style.backgroundColor = 'yellow';
+    switchEl.classList.add('on');
+}
+
+casingEl.addEventListener('click', (event) => {
+    if (event.target.matches('a') && switchEl.classList.contains('on')) {
+        event.preventDefault();
+        return;
+    }
+
+    alert('Hoppá, majdnem eltaláltad a kapcsolót, de pont nem!');
+})
+
+switchEl.addEventListener('click', (event) => {
+    event.stopPropagation();
+
+    if (containerEl.style.backgroundColor === 'black') {
+        containerEl.style.backgroundColor = 'yellow';
+        switchEl.classList.add('on');
+        localStorage.setItem('state', JSON.stringify({ on: true }))
+    } else {
+        containerEl.style.backgroundColor = 'black';
+        switchEl.classList.remove('on');
+        localStorage.setItem('state', JSON.stringify({ on: false }))
+    }
+})
