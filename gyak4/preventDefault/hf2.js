@@ -88,6 +88,8 @@ const resultsContainer = document.getElementById("resultsContainer");
 const selectedBook = document.getElementById("selectedBook");
 const openWebshop = document.getElementById("openWebshop");
 
+let clickedBook;
+
 queryByTitleBtn.addEventListener("click", e => {
     const query = queryBooks("title", bookSelectorByTitle.value);
     console.log(query);
@@ -127,7 +129,9 @@ function createTable(content) {
                 bookRow.style.backgroundColor = "lightgray";
                 selectedRow = bookRow;
                 selectedBook.innerHTML = `${book.author}: ${book.title} (${book.release})`;
-                if (!book.inStock) openWebshop.addEventListener("click", e => e.preventDefault());
+                clickedBook = book;
+                // if (!book.inStock) openWebshop
+                //     .addEventListener("click", e => e.preventDefault());
             } else if (selectedRow === bookRow) {
                 selectedRow = null;
             }
@@ -149,3 +153,9 @@ function createCell(type, content, row) {
     cell.innerHTML = content;
     row.appendChild(cell);
 }
+
+openWebshop.addEventListener('click', (event) => {
+    if (!clickedBook.inStock) {
+        event.preventDefault();
+    }
+})
