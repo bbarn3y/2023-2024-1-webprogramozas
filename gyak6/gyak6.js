@@ -3,7 +3,17 @@ function random(a, b) {
 }
 
 class Bird {
-    constructor() {}
+    constructor(context, x, y, width, height, velocity, acceleration) {
+        
+    }
+
+    draw() {
+
+    }
+
+    update(dt) {
+
+    }
 }
 
 class Column {
@@ -13,6 +23,8 @@ class Column {
 
 const canvas = document.getElementById('flappyCanvas');
 const context = canvas.getContext('2d');
+
+const bird = new Bird();
 
 let previousUpdate = performance.now();
 function cycle(now = performance.now()) {
@@ -29,6 +41,14 @@ function cycle(now = performance.now()) {
 function draw() {
     context.fillStyle = 'lightblue';
     context.fillRect(0, 0, canvas.width, canvas.height);
+
+    context.beginPath();
+    context.moveTo(0, 50);
+    context.lineTo(25, 0);
+    context.lineTo(50, 50);
+    context.lineTo(0, 50);
+    context.closePath();
+    context.stroke();
 }
 
 function update(dt) {
