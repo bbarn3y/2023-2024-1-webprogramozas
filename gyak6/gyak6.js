@@ -35,16 +35,36 @@ class Bird {
     update(dt) {
         this.velocity += this.acceleration * dt / 1000;
         this.y += this.velocity * dt / 1000;
+
+        if (this.y <= 0 || this.y >= canvas.height - bird.height ) {
+            gameOver = true;
+        }
     }
 }
 
 class Column {
-    constructor() {
+    constructor(context, x, y, width, height, velocity) {
+        this.context = context;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.velocity = velocity;
+    }
+
+    draw() {
+        context.fillStyle = 'green';
+        context.fillRect(this.x, this.y, this.width, this.height);
+    }
+
+    update(dt) {
+        this.x -= this.velocity * dt / 1000;
     }
 }
 
 const canvas = document.getElementById('flappyCanvas');
 const context = canvas.getContext('2d');
+let gameOver = false;
 
 const bird = new Bird(context, 50, 175, 50, 50, 30, 100);
 
@@ -57,7 +77,13 @@ function cycle(now = performance.now()) {
     update(dt);
     draw();
 
-    requestAnimationFrame(cycle);
+    if (!gameOver) {
+        requestAnimationFrame(cycle);
+    } else {
+        context.font = '20px Arial';
+        context.fillStyle = 'red';
+        context.fillText('The bird is dead.', 200, 50);
+    }
 }
 
 function draw() {
