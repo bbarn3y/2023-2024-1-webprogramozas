@@ -11,3 +11,5 @@ class Column {
     }
 }
 
+const canvas = document.getElementById('flappyCanvas');
+const context = canvas.getContext('2d');
