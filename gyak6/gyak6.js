@@ -65,8 +65,37 @@ class Column {
 const canvas = document.getElementById('flappyCanvas');
 const context = canvas.getContext('2d');
 let gameOver = false;
+let points = 0;
 
 const bird = new Bird(context, 50, 175, 50, 50, 30, 100);
+let columns = [];
+let columnGap = 200;
+let columnDistance = 150;
+
+function addColumns() {
+    const topColumnHeight = random(75, 175);
+
+    columns.push(
+        new Column(
+            context,
+            canvas.width,
+            0,
+            40,
+            topColumnHeight,
+            125
+        ),
+        new Column(
+            context,
+            canvas.width,
+            topColumnHeight + columnGap,
+            40,
+            canvas.height - topColumnHeight - columnGap,
+            125
+        )
+    );
+}
+
+addColumns();
 
 let previousUpdate = performance.now();
 function cycle(now = performance.now()) {
@@ -90,6 +119,8 @@ function draw() {
     context.fillStyle = 'lightblue';
     context.fillRect(0, 0, canvas.width, canvas.height);
 
+    // context.clearRect(0, 0, canvas.width, canvas.height);
+
     context.beginPath();
     context.moveTo(0, 50);
     context.lineTo(25, 0);
@@ -98,11 +129,47 @@ function draw() {
     context.closePath();
     context.stroke();
 
+    context.font = '14px Arial';
+    context.fillStyle = 'yellow';
+    context.fillText(`${points}`, 20, 30);
+
     bird.draw();
+
+    columns.forEach((column) => {
+        column.draw();
+    })
+}
+
+function rectanglesCollide(a, b) {
+    return a.x <= b.x + b.width &&
+        a.x + a.width >= b.x &&
+        a.y <= b.y + b.height &&
+        a.y + a.height >= b.y;
 }
 
 function update(dt) {
     bird.update(dt);
+
+    columns.forEach((column) => {
+        column.update(dt);
+    })
+
+    if (columns.some((column) => rectanglesCollide(bird, column))) {
+        gameOver = true;
+    }
+
+    const previousColumnLength = columns.length;
+    columns = columns.filter((column) => {
+        return column.x + column.width >= 0;
+    })
+    if (columns.length !== previousColumnLength) {
+        points++;
+    }
+
+    if (columns.length > 0 &&
+        canvas.width - columns.at(-1).x >= columnDistance) {
+        addColumns();
+    }
 }
 
 cycle();
