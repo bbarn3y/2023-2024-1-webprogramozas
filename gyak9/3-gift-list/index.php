@@ -1,3 +1,22 @@
+<?php
+
+include_once('memberstorage.php');
+
+$ms = new MemberStorage();
+
+$members = $ms->findAll();
+
+if (count($_POST) > 0) {
+  $member = [
+    "name" => $_POST['name']
+  ];
+  $ms->add($member);
+  header("Location: index.php");
+  exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +34,14 @@
     <button type="submit">Add</button>
   </form>
   <ul>
+    <?php foreach($members as $member): ?>
+      <li>
+        <a href="member.php?id=<?= $member['id'] ?>">
+          <?= $member['name'] ?>
+        </a>
+      </li>
+    <?php endforeach ?>
+    <!--
     <li>
       Family member 1 (2 / 4)
     </li>
@@ -24,6 +51,7 @@
     <li>
       Family member 3 (0 / 3)
     </li>
+-->
   </ul>
 </body>
 </html>

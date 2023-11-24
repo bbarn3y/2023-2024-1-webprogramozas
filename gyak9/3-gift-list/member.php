@@ -1,3 +1,28 @@
+<?php
+include_once('memberstorage.php');
+include_once('ideastorage.php');
+
+$ms = new MemberStorage();
+$is = new IdeaStorage();
+
+$id = $_GET['id'];
+$member = $ms->findById($id);
+
+if (count($_POST) > 0) {
+  if (isset($_POST['function-add'])) {
+    $is->add([
+      'idea' => $_POST['idea'],
+      'active' => true,
+      'ready' => false,
+      'comments' => [],
+      'member_id' => $id
+    ]);
+    header("Location: member.php?id={$id}");
+    exit();
+  }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +35,7 @@
 <body>
   <h1>Task 3: Gift list</h1>
   <a href="index.php">Back to main page</a>
-  <h2>Ideas for SELECTED FAMILY MEMBER</h2>
+  <h2>Ideas for <?= $member['name'] ?></h2>
   <form action="" method="post">
     <fieldset>
       <legend>New idea</legend>
