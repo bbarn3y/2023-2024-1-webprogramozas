@@ -1,0 +1,62 @@
+[
+    {
+        "title": "Dead Space Remake",
+        "genre": "Action",
+        "month": "January"
+    },
+    {
+        "title": "Hogwarts Legacy",
+        "genre": "RPG",
+        "month": "February"
+    },
+    {
+        "title": "Resident Evil 4 Remake",
+        "genre": "Action",
+        "month": "March"
+    },
+    {
+        "title": "Dead Island 2",
+        "genre": "FPS",
+        "month": "April"
+    },
+    {
+        "title": "Star Wars: Jedi Survivor",
+        "genre": "Action",
+        "month": "April"
+    },
+    {
+        "title": "System Shock",
+        "genre": "Action",
+        "month": "May"
+    },
+    {
+        "title": "Diablo IV",
+        "genre": "RPG",
+        "month": "June"
+    },
+    {
+        "title": "Turbo Overkill",
+        "genre": "FPS",
+        "month": "July"
+    },
+    {
+        "title": "Remnant 2",
+        "genre": "Action",
+        "month": "July"
+    },
+    {
+        "title": "Baldur's Gate 3",
+        "genre": "RPG",
+        "month": "August"
+    },
+    {
+        "title": "Armored Core VI: Fires of Rubicon",
+        "genre": "Action",
+        "month": "August"
+    },
+    {
+        "title": "Lies of P",
+        "genre": "RPG",
+        "month": "September"
+    }
+]
