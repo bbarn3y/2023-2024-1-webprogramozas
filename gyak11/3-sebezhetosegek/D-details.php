@@ -1,3 +1,10 @@
+<?php
+include_once 'storage.php';
+$storage = new Storage(new JsonIO('vulnerabilities.json'));
+$v = $storage->findById($_GET['id'] ?? '');
+
+// print_r($v);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,35 +21,43 @@
         <span>Oh, remek, ez egy sebezhetőség!</span>
     </div>
 
-    <h2>Példa sebezhetőség (3)</h2>
+    <h2><?= $v['shortdesc'] ?> (<?= $v['danger'] ?>)</h2>
     <div id="vulnerability">
-        <img src="src/error0.png">
-        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
+        <img src="<?= $v['image'] ?>">
+        <span>
+            <?= $v['longdesc'] ?>
+        </span>
     </div>
     
     <a href="index.php">Vissza a listához</a>
     
     <h2>Szerkesztés</h2>
-    <form>
-        <input type="hidden" name="id">
+    <form action="E-edit.php">
+        <input type="hidden" name="id" value="<?= $v['id'] ?>">
 
         <label for="shortdesc">Rövid név</label>
-        <input name="shortdesc">
+        <input name="shortdesc"
+               value="<?= $v['shortdesc'] ?>"
+               >
         
         <br>
         
         <label for="danger">Komolyság</label>
-        <input name="danger" type="number" min="1" max="5">
+        <input name="danger" type="number" min="1" max="5"
+            value="<?= $v['danger'] ?>">
 
         <br>
 
         <label for="longdesc">Leírás</label>
-        <textarea name="longdesc"></textarea>
+        <textarea name="longdesc"><?=
+        $v['longdesc']
+        ?></textarea>
 
         <br>
 
         <label for="image">Kép</label>
-        <input name="image">
+        <input name="image"
+            value="<?= $v['image'] ?>">
 
         <input type="submit" value="Sebezhetőség szerkesztése">
     </form>

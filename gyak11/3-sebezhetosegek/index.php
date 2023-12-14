@@ -1,3 +1,9 @@
+<?php
+include_once 'storage.php';
+$storage = new Storage(new JsonIO('vulnerabilities.json'));
+$vulnerabilities = $storage->findAll();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +21,7 @@
     </div>
 
     <h2>Sebezhetőség hozzáadása</h2>
-    <form>
+    <form action="A-add.php">
         <label for="shortdesc">Rövid név</label>
         <input name="shortdesc" placeholder="Gyenge pajzs">
         
@@ -40,9 +46,11 @@
 
     <h2>Sebezhetőségek</h2>
     <ul>
+        <?php foreach ($vulnerabilities as $v): ?>
         <li>
-            <a href="valami">Példa sebezhetőség</a>
+            <a href="D-details.php?id=<?= $v['id'] ?>"><?= $v['shortdesc'] ?></a>
         </li>
+        <?php endforeach; ?>
     </ul>
     
 </body>
